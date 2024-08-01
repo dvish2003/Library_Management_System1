@@ -59,5 +59,10 @@ public class BooksBOImpl implements BooksBO {
     public int getCurrentId() throws SQLException {
         return booksDAO.getCurrentId();
     }
+
+    @Override
+    public boolean UpdateBooks(int id) throws SQLException {
+        return booksDAO.UpdateBooks(id);
+    }
 }
 

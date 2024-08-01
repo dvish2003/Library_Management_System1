@@ -4,6 +4,7 @@ import lk.ijse.gdse.DAO.MemberDAO;
 import lk.ijse.gdse.DAO.SQLUtil;
 import lk.ijse.gdse.Entity.Members;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,9 +58,20 @@ public class MemberDAOImpl implements MemberDAO {
     @Override
     public Members searchByTel(String tel) throws SQLException {
         ResultSet rst = SQLUtil.execute("SELECT * FROM members WHERE phone_number = ?",tel +"");
-        rst.next();
-        return new Members(rst.getInt(1),rst.getString(2),rst.getString(3),rst.getString(4),rst.getString(5),rst.getDate(6),rst.getDate(7),rst.getString(8) );
-    }
+        if(rst.next()){
+            int member_id = rst.getInt("member_id");
+            String name=rst.getString("name");
+            String email=rst.getString("email");
+            String phoneNumber=rst.getString("phone_number");
+            String address=rst.getString("address");
+            Date dateOfBirth= Date.valueOf(rst.getString("date_of_birth"));
+            Date joinDate= Date.valueOf(rst.getString("join_date"));
+            String membershipType=rst.getString("membership_type");
+             return new Members(member_id,name,email,phoneNumber,address,dateOfBirth,joinDate,membershipType);
+
+        }
+return null;
+      }
 
     @Override
     public List<String> getTel() throws SQLException {

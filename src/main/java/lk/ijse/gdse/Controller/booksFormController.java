@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -218,16 +219,12 @@ public class booksFormController {
     }
 
     @FXML
-    void btnDashboardOnAction(ActionEvent event) {
-        /*try {
-            AnchorPane rootNode = FXMLLoader.load(getClass().getResource("/resources/view/dashboard_form.fxml"));
-            Stage stage = (Stage) root.getScene().getWindow();
-            stage.setScene(new Scene(rootNode));
-            stage.setTitle("Dashboard Form");
-            stage.centerOnScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+    void btnDashboardOnAction(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/DashBoard_form.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     @FXML
@@ -313,15 +310,25 @@ public class booksFormController {
        clearFields();
     }
 
+
     @FXML
     void comCategoryIdOnAction(ActionEvent event) {
-        int id = Integer.parseInt(comCategoryId.getValue());
+        String categoryIdValue = comCategoryId.getValue();
+
+        if (categoryIdValue == null || categoryIdValue.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Category ID .");
+            return;
+        }
+
+        int id = Integer.parseInt(categoryIdValue);
+
         try {
             BookCategories bookCategories = bookCategoriesBO.searchById(String.valueOf(id));
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error occurred while searching for stock: " + e.getMessage());
         }
     }
+
 
     private void showAlert(Alert.AlertType alertType, String s) {
     }
@@ -335,5 +342,11 @@ public class booksFormController {
         } catch (SQLException e) {
             showAlert(Alert.AlertType.ERROR, "Error occurred while fetching stock IDs: " + e.getMessage());
         }
+    }
+
+    public void txtItemIDOnKeyReleased(KeyEvent keyEvent) {
+    }
+    @FXML
+    public void txtItemUnitPriceOnKeyReleased(KeyEvent keyEvent) {
     }
 }

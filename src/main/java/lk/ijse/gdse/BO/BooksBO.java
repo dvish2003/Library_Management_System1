@@ -23,4 +23,6 @@ public interface BooksBO extends SuperBO{
     public List<String> getId() throws SQLException;
 
     public int getCurrentId() throws SQLException;
+    public boolean UpdateBooks(int id) throws SQLException;
+
 }

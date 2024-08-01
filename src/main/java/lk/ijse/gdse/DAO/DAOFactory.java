@@ -17,20 +17,8 @@ public class DAOFactory implements SuperDAO {
                 return new MemberDAOImpl();
             case BOOKS:
                 return new BooksDAOImpl();
-            /*case ITEM:
-                return new ItemDAOImpl();
-            case ORDER:
-                return new OrderDAOImpl();
-            case ORDER_DETAILS:
-                return new OrderDetailDAOImpl();
-            case PAYMENT:
-                return new PaymentDAOImpl();
-            case STOCK:
-                return new StockDAOImpl();
-            case SUPPLIER:
-                return new SupplierDAOImpl();
-            case SUPPLIER_DETAILS:
-                return new SupplierDetailsDAOImpl();*/
+            case BOOK_CATEGORIES:
+                return new BookCategoryDAOImpl();
             default:
                 return null;
         }

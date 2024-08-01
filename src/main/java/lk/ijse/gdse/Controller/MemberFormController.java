@@ -6,11 +6,9 @@ import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -25,7 +23,6 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
-import javafx.scene.control.Label;
 
 public class MemberFormController {
 
@@ -182,7 +179,7 @@ public class MemberFormController {
     private void getCurrentMemberId() {
         try {
             int currentId =(memberBO.getCurrentId());
-            int nextMemberId = generateNextOrderId(currentId);
+            int nextMemberId = generateNextId(currentId);
             System.out.println(nextMemberId);
             txtId.setText(String.valueOf(nextMemberId));
 
@@ -192,7 +189,7 @@ public class MemberFormController {
     }
 
 
-    private int generateNextOrderId(int currentId) {
+    private int generateNextId(int currentId) {
         if (currentId != 0) {
             int idNum = (currentId) + 1;
             return idNum;
@@ -248,16 +245,13 @@ public class MemberFormController {
         txtTel.clear();
     }
     @FXML
-    void btnDashBoardOnAction(ActionEvent event) {
-        try {
-            AnchorPane rootNode = FXMLLoader.load(getClass().getResource("/resources/view/dashboard_form.fxml"));
-            Stage stage = (Stage) root.getScene().getWindow();
-            stage.setScene(new Scene(rootNode));
-            stage.setTitle("Dashboard Form");
-            stage.centerOnScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void btnDashBoardOnAction(ActionEvent event) throws IOException {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/DashBoard_form.fxml"));
+            Parent root = loader.load();
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+
     }
 
     @FXML

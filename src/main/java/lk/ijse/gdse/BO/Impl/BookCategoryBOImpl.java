@@ -50,6 +50,9 @@ public class BookCategoryBOImpl implements BookCategoriesBO {
         return bookCategoryDAO.getTel();
     }
 
+
+
+
     @Override
     public int getCurrentId() throws SQLException {
         return bookCategoryDAO.getCurrentId();

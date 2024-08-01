@@ -12,7 +12,9 @@ import java.util.List;
 public class BookCategoryDAOImpl implements BookCategoryDAO {
     @Override
     public boolean save(BookCategories bookCategory) throws SQLException {
-        return SQLUtil.execute("INSERT INTO book_categories VALUES(?,?)",bookCategory.getCategory_id(),bookCategory.getCategory_name());
+        return SQLUtil.execute("INSERT INTO book_categories VALUES(?,?)",
+                bookCategory.getCategory_id(),
+                bookCategory.getCategory_name());
     }
 
     @Override
@@ -36,9 +38,10 @@ public class BookCategoryDAOImpl implements BookCategoryDAO {
 
     @Override
     public boolean update(BookCategories bookCategories) throws SQLException {
-        return SQLUtil.execute("UPDATE book_categories SET category_name = ?",
-                bookCategories.getCategory_id(),
-                bookCategories.getCategory_name())
+        return SQLUtil.execute("UPDATE book_categories SET category_name = ? WHERE category_id=?",
+                bookCategories.getCategory_name(),
+                bookCategories.getCategory_id()
+        )
                 ;
     }
 

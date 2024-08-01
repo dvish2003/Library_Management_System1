@@ -10,7 +10,7 @@ import java.util.List;
 public interface BookCategoriesBO extends SuperBO{
     public boolean saveBookCategories(BookCategoriesDTO books) throws SQLException;
 
-    public ArrayList<BookCategoriesDTO> getAllBookCategories() throws SQLException;
+    public List<BookCategoriesDTO> getAllBookCategories() throws SQLException;
 
     public boolean deleteBookCategories(int id) throws SQLException;
 
