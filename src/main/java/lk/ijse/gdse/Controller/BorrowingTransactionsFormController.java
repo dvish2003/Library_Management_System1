@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import lk.ijse.gdse.BO.BarrowTransBO;
@@ -19,6 +20,7 @@ import lk.ijse.gdse.BO.Impl.MemberBOImpl;
 import lk.ijse.gdse.BO.MemberBO;
 import lk.ijse.gdse.BO.PlaceBook;
 import lk.ijse.gdse.DTO.BorrowingTransactionsDTO;
+import lk.ijse.gdse.DTO.CartTmDTO;
 import lk.ijse.gdse.Entity.Books;
 import lk.ijse.gdse.Entity.Members;
 
@@ -31,7 +33,8 @@ import java.util.List;
 
 public class BorrowingTransactionsFormController {
 
-    public TableColumn colDueDate;
+    @FXML
+    private TableColumn <?,?> colDueDate;
     public JFXButton btnAddBook;
     @FXML
     private JFXButton btnAddCustomer;
@@ -65,9 +68,6 @@ public class BorrowingTransactionsFormController {
     private TableColumn<?, ?> colMemberName;
 
     @FXML
-    private TableColumn<?, ?> colReturnDate;
-
-    @FXML
     private ComboBox<String> comBookId;
 
     @FXML
@@ -98,7 +98,7 @@ public class BorrowingTransactionsFormController {
     private AnchorPane root;
 
     @FXML
-    private TableView<?> tblBorrowDetails;
+    private TableView<CartTmDTO> tblBorrowDetails;
 
     BarrowTransBO borrowTransBO = new BarrowTransBOImpl();
     MemberBO memberBO = new MemberBOImpl();
@@ -148,9 +148,27 @@ public class BorrowingTransactionsFormController {
     }
 
     private void loadAll() {
+        ObservableList<CartTmDTO> obList = FXCollections.observableArrayList();
+        try {
+            List<CartTmDTO> List = borrowTransBO.getAllCart();
+            obList.addAll(List);
+            tblBorrowDetails.setItems(obList);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error loading : " + e.getMessage(), e);
+        }
+
     }
 
     private void setCellValueFactory() {
+        colBorrowId.setCellValueFactory(new PropertyValueFactory<>("borrowId"));
+        colBookId.setCellValueFactory(new PropertyValueFactory<>("BookId"));
+        colBookName.setCellValueFactory(new PropertyValueFactory<>("BookName"));
+        colMemberId.setCellValueFactory(new PropertyValueFactory<>("MemberId"));
+        colMemberName.setCellValueFactory(new PropertyValueFactory<>("MemberName"));
+        colBorrowDate.setCellValueFactory(new PropertyValueFactory<>("BorrowDate"));
+        colDueDate.setCellValueFactory(new PropertyValueFactory<>("DueDate"));
+
+
     }
 
     @FXML
